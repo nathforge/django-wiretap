@@ -1,0 +1,47 @@
+{% extends "admin/change_form.html" %}
+
+{% block object-tools %}{% endblock %}
+{% block submit_buttons_bottom %}{% endblock %}
+
+{% block field_sets %}
+    <fieldset style="margin-top: 1em">
+        <legend>Meta</legend>
+        <blockquote>
+            <strong>Started at:</strong> {{ original.started_at }}<br>
+            <strong>Ended at:</strong> {% if original.ended_at %}{{ original.ended_at }}{% else %}&mdash;{% endif %}<br>
+            <strong>Duration:</strong> {% if original.duration %}{{ original.duration }}s{% else %}&mdash;{% endif %}<br>
+            <strong>Remote addr:</strong> {{ original.remote_addr }}<br>
+        </blockquote>
+    </fieldset>
+    <fieldset style="margin-top: 2em">
+        <legend>Request</legend>
+        <blockquote>
+            <pre style="white-space: normal">
+            {{ original.req_method }} {{ original.req_path }} HTTP/1.1<br>
+            {% for name, value in original.req_headers %}
+            {{ name }}: {{ value }}<br>
+            {% endfor %}
+            </pre>
+        </blockquote>
+        {% if original.req_body %}
+            <a href="req-body/">View request body</a>
+        {% endif %}
+    </fieldset>
+
+    {% if original.res_status_code %}
+    <fieldset style="margin-top: 2em">
+        <legend>Response</legend>
+        <blockquote>
+            <pre style="white-space: normal">
+            HTTP {{ original.res_status_code }} {{ original.res_reason_phrase }}<br>
+            {% for name, value in original.res_headers %}
+            {{ name }}: {{ value }}<br>
+            {% endfor %}
+            </pre>
+        </blockquote>
+        {% if original.res_body %}
+            <a href="res-body/">View response body</a>
+        {% endif %}
+    </fieldset>
+    {% endif %}
+{% endblock %}
