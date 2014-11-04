@@ -10,6 +10,7 @@ from django.http.cookie import SimpleCookie
 from django.utils import timezone
 
 from wiretap.models import Message, Tap
+from wiretap.signals import post_save_message_request, post_save_message_response
 
 DEFAULT_MAX_MESSAGE_COUNT = 1000
 
@@ -49,7 +50,7 @@ class WiretapMiddleware(object):
         a created `Message` object in `request._wiretap_message`.
         """
 
-        request._wiretap_message = None
+        request.wiretap_message = None
 
         if not self.should_tap(request):
             return
@@ -74,7 +75,7 @@ class WiretapMiddleware(object):
                 content_type=req_content_type
             )
 
-        request._wiretap_message = Message.objects.create(
+        request.wiretap_message = Message.objects.create(
             started_at=req_started_at,
             ended_at=timezone.now(),
             remote_addr=request.META['REMOTE_ADDR'],
@@ -84,16 +85,26 @@ class WiretapMiddleware(object):
             req_body=req_body_file
         )
 
+        post_save_message_request.send(
+            sender=self.__class__,
+            request=request,
+            message=request.wiretap_message
+        )
+
     def process_response(self, request, response):
         """
         Process the response. If we're tracking this request,
         `request._wiretap_message` will be set.
         """
 
-        if not request._wiretap_message:
+        if not request.wiretap_message:
             return response
         else:
-            return WiretapHttpResponse(response, request._wiretap_message)
+            return WiretapHttpResponse(
+                request,
+                response,
+                request.wiretap_message
+            )
 
 class WiretapHttpResponse(StreamingHttpResponse):
     """
@@ -101,9 +112,10 @@ class WiretapHttpResponse(StreamingHttpResponse):
     `Message` object.
     """
 
-    def __init__(self, response, message):
+    def __init__(self, request, response, message):
         super(WiretapHttpResponse, self).__init__()
         self._copy_from_response(response)
+        self._request = request
         self._response = response
         self._message = message
 
@@ -141,6 +153,13 @@ class WiretapHttpResponse(StreamingHttpResponse):
             self._message.res_headers = self._response.items()
             self._message.res_body = res_body_file
             self._message.save()
+
+            post_save_message_response.send(
+                sender=self.__class__,
+                request=self._request,
+                response=self._response,
+                message=self._message
+            )
 
             delete_old_messages()
 
