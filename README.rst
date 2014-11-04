@@ -12,12 +12,12 @@ Screenshots
 List
 ^^^^
 
-    .. image:: screenshot-list.png
+    .. image:: https://raw.githubusercontent.com/nathforge/django-wiretap/master/screenshot-list.png
 
 View
 ^^^^
 
-    .. image:: screenshot-view.png
+    .. image:: https://raw.githubusercontent.com/nathforge/django-wiretap/master/screenshot-view.png
 
 
 Usage:
