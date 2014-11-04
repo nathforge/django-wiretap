@@ -123,13 +123,15 @@ class WiretapHttpResponse(StreamingHttpResponse):
         """
         Copy data from the original response.
         """
+        
+        for key, _ in self.items():
+            del self[key]
+
+        for key, value in response.items():
+            self[key] = value
 
         self.status_code = response.status_code
         self.reason_phrase = response.reason_phrase
-        self._headers = {
-            key.lower(): (key, value,)
-            for (key, value) in response.items()
-        }
         self.cookies = SimpleCookie(str(response.cookies))
 
     def __iter__(self):
