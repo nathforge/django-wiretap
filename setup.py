@@ -5,7 +5,7 @@ import os.path
 from distutils.core import setup
 
 setup(
-    version='0.1',
+    version='0.1.1',
     url='https://github.com/nathforge/django-wiretap',
     name='django-wiretap',
     description='https://github.com/nathforge/django-wiretap',
