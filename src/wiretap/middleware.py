@@ -108,8 +108,8 @@ class WiretapMiddleware(object):
 
 class WiretapHttpResponse(StreamingHttpResponse):
     """
-    HttpResponse that mimics another response, and saves the data to a
-    `Message` object.
+    HttpResponse that wraps another response, mimicking it and saving the data
+    to a `Message` object.
     """
 
     def __init__(self, request, response, message):
@@ -123,7 +123,7 @@ class WiretapHttpResponse(StreamingHttpResponse):
         """
         Copy data from the original response.
         """
-        
+
         for key, _ in self.items():
             del self[key]
 
