@@ -11,7 +11,7 @@ setup(
     description='https://github.com/nathforge/django-wiretap',
     long_description=open(os.path.join(os.path.dirname(__file__), 'README.rst')).read(),
     author='Nathan Reynolds',
-    author_email='nath@nreynolds.co.uk',
+    author_email='email@nreynolds.co.uk',
     packages=['wiretap'],
     package_dir={'': 'src'},
     install_requires=[
