@@ -26,8 +26,8 @@ Usage:
 - ``pip install django-wiretap``
 - Edit Django settings:
 
-   - Add ``'wiretap'`` to ``INSTALLED_APPS``
-   - Add ``'wiretap.middleware.WiretapMiddleware'`` to your ``MIDDLEWARE_CLASSES``.
+  - Add ``'wiretap'`` to ``INSTALLED_APPS``.
+  - Add ``'wiretap.middleware.WiretapMiddleware'`` to your ``MIDDLEWARE_CLASSES``.
 
 - Create models with ``./manage.py syncdb``
 - Go to Django admin, add a new ``Tap``.
