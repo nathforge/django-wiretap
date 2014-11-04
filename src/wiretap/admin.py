@@ -9,20 +9,20 @@ class TapAdmin(admin.ModelAdmin):
     list_display = ('path_regex',)
 
 class MessageAdmin(ReadOnlyModelAdmin):
-    list_display = ('method_path', 'response_status', 'remote_addr', 'duration',)
+    list_display = ('request', 'response', 'remote_addr', 'duration',)
     list_filter = ('started_at', 'req_method', 'res_status_code',)
     search_fields = ('remote_addr', 'req_path',)
 
-    def method_path(self, obj):
+    def request(self, obj):
         return '{} {}'.format(obj.req_method, obj.req_path.encode('ascii', 'ignore'))
-    method_path.admin_order_field = 'req_path'
+    request.admin_order_field = 'req_path'
 
-    def response_status(self, obj):
+    def response(self, obj):
         if obj.res_status_code is not None:
             return '{} {}'.format(obj.res_status_code, obj.res_reason_phrase.encode('ascii', 'ignore'))
         else:
             return ''
-    response_status.admin_order_field = 'res_status_code'
+    response.admin_order_field = 'res_status_code'
 
     def get_urls(self):
         from django.conf.urls import patterns, url
