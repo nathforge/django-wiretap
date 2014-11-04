@@ -32,8 +32,10 @@ Usage:
 - Create models with ``./manage.py syncdb``
 - Go to Django admin, add a new ``Tap``.
 
-  - This contains a path regex, which is matched against the full path, including the query string
-  - If you just want to test Wiretap, set it to ``'/'``.
+  - This contains a path regex, which is matched against the full path, including the query string.
+
+    - For example, to capture everything within the ``/api/`` path of your site, use ``'^/api/'``.
+    - If you just want to test Wiretap, set it to ``'/'``.
 
 HTTP request/responses will now be saved to the `Message` admin page.
 
