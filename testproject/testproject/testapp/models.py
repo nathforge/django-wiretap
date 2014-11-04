@@ -21,5 +21,7 @@ def did_save_message_response(request, response, message, **kwargs):
             message_ptr=message,
             user=request.user
         )
-        user_message.__dict__.update(message.__dict__)
+        for field in message._meta.fields:
+            if field != message._meta.pk:
+                setattr(user_message, field.name, getattr(message, field.name))
         user_message.save()
