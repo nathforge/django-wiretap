@@ -47,7 +47,7 @@ class WiretapMiddleware(object):
     def process_request(self, request):
         """
         Process incoming requests. If we're tracking this request, we'll store
-        a created `Message` object in `request._wiretap_message`.
+        a created `Message` object in `request.wiretap_message`.
         """
 
         request.wiretap_message = None
@@ -94,7 +94,7 @@ class WiretapMiddleware(object):
     def process_response(self, request, response):
         """
         Process the response. If we're tracking this request,
-        `request._wiretap_message` will be set.
+        `request.wiretap_message` will be set.
         """
 
         if not request.wiretap_message:
