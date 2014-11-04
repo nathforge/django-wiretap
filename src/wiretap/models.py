@@ -1,5 +1,6 @@
+import json
+
 from django.db import models
-from jsonfield import JSONField
 
 class _NotSet(object):
     pass
@@ -18,12 +19,12 @@ class Message(models.Model):
 
     req_method = models.CharField(max_length=16)
     req_path = models.TextField()
-    req_headers = JSONField()
+    req_headers_json = models.TextField()
     req_body = models.FileField(blank=True, null=True, upload_to='message/%Y/%m/%d')
 
     res_status_code = models.PositiveIntegerField(blank=True, null=True)
     res_reason_phrase = models.CharField(max_length=64)
-    res_headers = JSONField(blank=True)
+    res_headers_json = models.TextField()
     res_body = models.FileField(blank=True, null=True, upload_to='message/%Y/%m/%d')
 
     @property
@@ -32,6 +33,14 @@ class Message(models.Model):
             return None
         else:
             return (self.ended_at - self.started_at).total_seconds
+
+    @property
+    def req_headers(self):
+        return json.loads(self.req_headers_json)
+
+    @property
+    def res_headers(self):
+        return json.loads(self.res_headers_json)
 
     def get_req_header(self, key, default=_NotSet):
         return self._get_header(self.req_headers, key, default)

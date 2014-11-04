@@ -15,7 +15,6 @@ setup(
     packages=['wiretap'],
     package_dir={'': 'src'},
     install_requires=[
-        'jsonfield',
         'django-roma'
     ]
 )

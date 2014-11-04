@@ -1,3 +1,4 @@
+import json
 import re
 import tempfile
 import uuid
@@ -81,7 +82,7 @@ class WiretapMiddleware(object):
             remote_addr=request.META['REMOTE_ADDR'],
             req_method=request.method,
             req_path=request.path,
-            req_headers=req_headers,
+            req_headers_json=json.dumps(req_headers),
             req_body=req_body_file
         )
 
@@ -152,7 +153,7 @@ class WiretapHttpResponse(StreamingHttpResponse):
 
             self._message.res_status_code = self._response.status_code
             self._message.res_reason_phrase = self._response.reason_phrase
-            self._message.res_headers = self._response.items()
+            self._message.res_headers_json = json.dumps(self._response.items())
             self._message.res_body = res_body_file
             self._message.save()
 
