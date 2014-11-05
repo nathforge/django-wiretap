@@ -19,5 +19,6 @@ setup(
     package_dir={'': 'src'},
     install_requires=[
         'django-roma'
-    ]
+    ],
+    test_suite='testproject.runtests.main'
 )
