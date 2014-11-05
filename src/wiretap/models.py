@@ -63,4 +63,7 @@ class Message(models.Model):
                 return default
 
     def __unicode__(self):
-        return u'{} {}'.format(self.req_method, self.req_path.encode('ascii', 'ignore'))
+        return u'{} {}'.format(
+            self.req_method,
+            self.req_path.encode('ascii', 'ignore')
+        )
