@@ -14,7 +14,7 @@ class MessageAdmin(ReadOnlyModelAdmin):
     search_fields = ('remote_addr', 'req_path',)
 
     def request(self, obj):
-        return '{} {}'.format(obj.req_method, obj.req_path.encode('ascii', 'ignore'))
+        return unicode(obj)
     request.admin_order_field = 'req_path'
 
     def response(self, obj):
