@@ -19,7 +19,10 @@ class MessageAdmin(ReadOnlyModelAdmin):
 
     def response(self, obj):
         if obj.res_status_code is not None:
-            return '{} {}'.format(obj.res_status_code, obj.res_reason_phrase.encode('ascii', 'ignore'))
+            return '{} {}'.format(
+                obj.res_status_code,
+                obj.res_reason_phrase.encode('ascii', 'ignore')
+            )
         else:
             return ''
     response.admin_order_field = 'res_status_code'
@@ -28,14 +31,22 @@ class MessageAdmin(ReadOnlyModelAdmin):
         from django.conf.urls import patterns, url
 
         return patterns('',
-            url(r'^(?P<pk>\d+)/req-body/$', self.admin_site.admin_view(self.body_view), kwargs={
-                'field_name': 'req_body',
-                'get_header_name': 'get_req_header'
-            }),
-            url(r'^(?P<pk>\d+)/res-body/$', self.admin_site.admin_view(self.body_view), kwargs={
-                'field_name': 'res_body',
-                'get_header_name': 'get_res_header'
-            })
+            url(
+                r'^(?P<pk>\d+)/req-body/$',
+                self.admin_site.admin_view(self.body_view),
+                kwargs={
+                    'field_name': 'req_body',
+                    'get_header_name': 'get_req_header'
+                }
+            ),
+            url(
+                r'^(?P<pk>\d+)/res-body/$',
+                self.admin_site.admin_view(self.body_view),
+                kwargs={
+                    'field_name': 'res_body',
+                    'get_header_name': 'get_res_header'
+                }
+            )
         ) + super(MessageAdmin, self).get_urls()
 
     def body_view(self, request, pk, field_name, get_header_name):
