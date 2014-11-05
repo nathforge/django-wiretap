@@ -1,8 +1,11 @@
 #!/usr/bin/env python
 
 import os.path
+import sys
 
-from distutils.core import setup
+from setuptools import setup
+
+sys.path.insert(0, os.path.join(os.path.dirname(__file__), 'testproject'))
 
 setup(
     version='0.1.1',
