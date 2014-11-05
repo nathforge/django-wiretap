@@ -65,7 +65,7 @@ class WiretapMiddleware(object):
                 key = key[5:].title()
                 req_headers.append((key, value))
                 if key == 'Content-Type':
-                    content_type = value
+                    req_content_type = value
 
         if not request.body:
             req_body_file = None
