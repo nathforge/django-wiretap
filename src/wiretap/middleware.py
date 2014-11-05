@@ -157,14 +157,14 @@ class WiretapHttpResponse(StreamingHttpResponse):
             self._message.res_body = res_body_file
             self._message.save()
 
-            post_save_message_response.send(
-                sender=self.__class__,
-                request=self._request,
-                response=self._response,
-                message=self._message
-            )
+        post_save_message_response.send(
+            sender=self.__class__,
+            request=self._request,
+            response=self._response,
+            message=self._message
+        )
 
-            delete_old_messages()
+        delete_old_messages()
 
 def delete_old_messages():
     """
