@@ -32,7 +32,7 @@ class Message(models.Model):
         if self.ended_at is None:
             return None
         else:
-            return (self.ended_at - self.started_at).total_seconds
+            return (self.ended_at - self.started_at).total_seconds()
 
     @property
     def req_headers(self):
