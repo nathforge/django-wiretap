@@ -9,6 +9,7 @@ from django.core.files.uploadedfile import SimpleUploadedFile, UploadedFile
 from django.http import StreamingHttpResponse
 from django.http.cookie import SimpleCookie
 from django.utils import timezone
+import six
 
 from wiretap.models import Message, Tap
 from wiretap.signals import post_save_message_request, post_save_message_response
@@ -60,7 +61,7 @@ class WiretapMiddleware(object):
 
         req_content_type = None
         req_headers = []
-        for (key, value) in request.META.iteritems():
+        for (key, value) in six.iteritems(request.META):
             if key.startswith('HTTP_'):
                 key = key[5:].title()
                 req_headers.append((key, value))

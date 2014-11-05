@@ -1,1 +1,1 @@
-import runtests
+from . import runtests
