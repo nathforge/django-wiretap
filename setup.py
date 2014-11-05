@@ -18,6 +18,7 @@ setup(
     packages=['wiretap'],
     package_dir={'': 'src'},
     install_requires=[
+        'django >= 1.5, < 1.8'
         'django-roma'
     ],
     test_suite='testproject.runtests.main'
