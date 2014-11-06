@@ -5,8 +5,10 @@ Captures HTTP requests & responses for debugging.
 
 This is an early release, and is **not** suitable for production use.
 
-.. image:: https://travis-ci.org/nathforge/django-wiretap.svg?branch=master
+|CILink|_
 
+.. |CILink| image:: https://travis-ci.org/nathforge/django-wiretap.svg?branch=master
+.. _CILink: https://travis-ci.org/nathforge/django-wiretap
 
 
 Screenshots
